@@ -49,7 +49,7 @@ export const COPY = {
 
   finale: {
     title: 'On Your Own.',
-    body: "A little milestone before the Major Achivement. Be little proud of yourselve. It's juts the beginning.",
+    body: "A little milestone before the Major Achivement. Be little proud of yourselve. It's just the beginning.",
     date: formatMilestoneDate(milestoneDate),
     replay: 'Replay the memory',
   },

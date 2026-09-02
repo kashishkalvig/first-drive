@@ -606,6 +606,7 @@ export class SceneDirector {
         { womanX: 0, womanY: 0, duration: reduced ? 0.01 : t.walk, ease: 'none' },
         fade * 0.5,
       )
+      .to(state, { duration: 1 })
       .add(() => {
         // Motion stops once she has arrived; the final composition stays static.
         if (!reduced) anim.walk.setFrame(0);
