@@ -1,0 +1,303 @@
+{
+  "version": "2.1-clean-alpha",
+  "coordinateSystem": "top-left",
+  "designViewport": {
+    "width": 941,
+    "height": 1672,
+    "aspectRatio": "9:16 portrait"
+  },
+  "alphaPolicy": {
+    "sprites": "true-alpha-png",
+    "overlays": "true-alpha-png",
+    "transparentPixelsRGB": "zeroed",
+    "edgeTreatment": "green-screen despill and alpha-fringe cleanup",
+    "transparentBackgrounds": [
+      "drivingMidground",
+      "drivingForegroundRoad"
+    ],
+    "opaqueBackgrounds": [
+      "gateDawn",
+      "drivingFar",
+      "craigieburnStation"
+    ]
+  },
+  "spriteSheets": {
+    "maleIdle": {
+      "src": "sprites/male_idle_2x3_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 3],
+      "cell": [512, 512],
+      "anchor": [0.5, 1.0],
+      "fps": 6,
+      "loop": true,
+      "frames": [
+        "neutral-lean",
+        "inhale",
+        "head-tilt",
+        "settle",
+        "weight-shift",
+        "return-neutral"
+      ]
+    },
+    "pandaRevealCheer": {
+      "src": "sprites/panda_reveal_cheer_2x4_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 4],
+      "cell": [512, 384],
+      "anchor": [0.5, 1.0],
+      "fps": 8,
+      "loop": false,
+      "frames": [
+        "reach-right",
+        "grip-brace",
+        "lean-tug",
+        "strong-tug",
+        "release",
+        "delighted-surprise",
+        "jump-cheer",
+        "landing-wave"
+      ]
+    },
+    "duckRevealCheer": {
+      "src": "sprites/duck_reveal_cheer_2x4_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 4],
+      "cell": [512, 384],
+      "anchor": [0.5, 1.0],
+      "fps": 8,
+      "loop": false,
+      "frames": [
+        "reach-left",
+        "grip-brace",
+        "lean-tug",
+        "strong-tug",
+        "release",
+        "delighted-surprise",
+        "hop-cheer",
+        "landing-wave"
+      ]
+    },
+    "womanDriver": {
+      "src": "sprites/woman_driver_2x3_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 3],
+      "cell": [512, 512],
+      "anchor": [0.5, 1.0],
+      "fps": 6,
+      "loop": true,
+      "frames": [
+        "neutral",
+        "road-bob",
+        "steering-correction",
+        "settle",
+        "opposite-correction",
+        "return-neutral"
+      ]
+    },
+    "womanWalk": {
+      "src": "sprites/woman_walk_2x4_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 4],
+      "cell": [512, 384],
+      "anchor": [0.5, 1.0],
+      "fps": 8,
+      "loop": true,
+      "frames": [
+        "left-contact",
+        "left-down",
+        "left-pass",
+        "left-up",
+        "right-contact",
+        "right-down",
+        "right-pass",
+        "right-up"
+      ]
+    },
+    "redCoverReveal": {
+      "src": "sprites/red_cover_reveal_2x4_portrait.png",
+      "size": [1024, 2048],
+      "grid": [2, 4],
+      "cell": [512, 512],
+      "anchor": [0.5, 0.8],
+      "fps": 8,
+      "loop": false,
+      "mustShareDestinationRectWith": "silverLiftback:0",
+      "frames": [
+        "fully-covered",
+        "front-hem-lift",
+        "hood-reveal",
+        "half-lift",
+        "above-roof-wave",
+        "rightward-ribbon",
+        "flying-bundle",
+        "final-cloth-curl"
+      ]
+    },
+    "silverLiftback": {
+      "src": "sprites/silver_liftback_2x3_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 3],
+      "cell": [512, 512],
+      "anchor": [0.5, 0.8],
+      "frames": [
+        "reveal-three-quarter-front",
+        "driving-side-complete",
+        "station-three-quarter-rear",
+        "driving-side-body-no-wheels",
+        "wheel-static",
+        "wheel-spinning"
+      ],
+      "drivingAssembly": {
+        "frontWheelRect": [81, 301, 86, 86],
+        "rearWheelRect": [390, 301, 86, 86],
+        "driverFrameRect": [141, 211, 180, 180],
+        "driverClip": "overlays/side_window_driver_clip.png"
+      }
+    },
+    "keyFx": {
+      "src": "sprites/key_fx_3x4_portrait.png",
+      "size": [1152, 1536],
+      "grid": [3, 4],
+      "cell": [384, 384],
+      "anchor": [0.5, 0.5],
+      "frames": [
+        "key-neutral",
+        "key-hover-glow",
+        "key-pressed",
+        "key-rotate",
+        "gold-radial-burst",
+        "gold-motion-trail",
+        "sparkle-cluster",
+        "shimmer-stars",
+        "red-cloth-swoosh",
+        "coral-hearts",
+        "confetti-flowers",
+        "key-contact-ring"
+      ]
+    },
+    "contactShadows": {
+      "src": "sprites/contact_shadows_2x3_portrait.png",
+      "size": [1024, 1536],
+      "grid": [2, 3],
+      "cell": [512, 512],
+      "anchor": [0.5, 1.0],
+      "frames": [
+        "reveal-car",
+        "driving-car",
+        "station-car",
+        "male",
+        "woman",
+        "mascot"
+      ]
+    }
+  },
+  "backgrounds": {
+    "gateDawn": {
+      "src": "backgrounds/gate_dawn_portrait.png",
+      "size": [941, 1672],
+      "opaque": true
+    },
+    "drivingFar": {
+      "src": "backgrounds/driving_far_portrait.png",
+      "size": [941, 1672],
+      "opaque": true,
+      "repeatX": true,
+      "relativeSpeed": 0.08
+    },
+    "drivingMidground": {
+      "src": "backgrounds/driving_midground_portrait.png",
+      "size": [941, 1672],
+      "opaque": false,
+      "repeatX": true,
+      "relativeSpeed": 0.35
+    },
+    "drivingForegroundRoad": {
+      "src": "backgrounds/driving_foreground_road_portrait.png",
+      "size": [941, 1672],
+      "opaque": false,
+      "repeatX": true,
+      "relativeSpeed": 1.0
+    },
+    "craigieburnStation": {
+      "src": "backgrounds/craigieburn_station_portrait.png",
+      "size": [941, 1672],
+      "opaque": true
+    }
+  },
+  "overlays": {
+    "cinematicVignette": {
+      "src": "overlays/cinematic_vignette_portrait.png",
+      "size": [941, 1672],
+      "opaque": false
+    },
+    "sideWindowDriverClip": {
+      "src": "overlays/side_window_driver_clip.png",
+      "size": [512, 512],
+      "opaque": false,
+      "usage": "alpha-mask"
+    }
+  },
+  "referenceAssembly": {
+    "opening": {
+      "maleRect": [-45, 775, 520, 520],
+      "revealGroupRect": [145, 790, 720, 720]
+    },
+    "reveal": {
+      "revealGroupRect": [145, 790, 720, 720],
+      "pandaRect": [5, 1050, 270, 270],
+      "duckRect": [695, 1085, 250, 250]
+    },
+    "key": {
+      "revealGroupRect": [145, 805, 720, 720],
+      "keyRect": [355, 650, 230, 330]
+    },
+    "driving": {
+      "carAssemblyRect": [60, 805, 820, 820]
+    },
+    "stationFinale": {
+      "carRect": [-80, 920, 650, 650],
+      "womanRect": [555, 965, 300, 360]
+    }
+  },
+  "sceneLayerOrder": {
+    "opening": [
+      "gateDawn",
+      "contactShadows:0",
+      "silverLiftback:0",
+      "redCoverReveal:0",
+      "maleIdle",
+      "cinematicVignette",
+      "live-dom-copy"
+    ],
+    "reveal": [
+      "gateDawn",
+      "contactShadows:0",
+      "silverLiftback:0",
+      "redCoverReveal:0-7",
+      "pandaRevealCheer:0-7",
+      "duckRevealCheer:0-7",
+      "keyFx",
+      "cinematicVignette",
+      "live-dom-copy"
+    ],
+    "driving": [
+      "drivingFar",
+      "drivingMidground",
+      "drivingForegroundRoad",
+      "contactShadows:1",
+      "womanDriver-clipped",
+      "silverLiftback:3",
+      "silverLiftback:4-5",
+      "cinematicVignette",
+      "live-dom-copy"
+    ],
+    "stationFinale": [
+      "craigieburnStation",
+      "contactShadows:2",
+      "silverLiftback:2",
+      "womanWalk",
+      "cinematicVignette",
+      "live-dom-copy"
+    ]
+  }
+}

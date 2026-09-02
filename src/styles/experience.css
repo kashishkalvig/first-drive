@@ -1,0 +1,439 @@
+/* ------------------------------------------------------------------ *
+ * First Drive
+ *
+ * The canvas and this DOM overlay share one 941x1672 design space and one
+ * scale transform, so a caption written at y=1400 sits over the same pixels
+ * of art on every screen. All copy lives here as real text — none of it is
+ * baked into the artwork.
+ * ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #070a18;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #070a18;
+  color: #f7ecd2;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia,
+    'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:root {
+  --stage-scale: 1;
+  --gold: #f0d38a;
+  --gold-bright: #ffe6ad;
+  --gold-line: rgba(226, 186, 110, 0.85);
+  --cream: #f9efd8;
+  --navy: #0d1330;
+  --navy-glass: rgba(13, 23, 56, 0.72);
+}
+
+.experience {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #070a18;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Extends the scene into the letterbox on wide screens. */
+.experience-surround {
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(circle at 50% 42%, #1a2350 0%, #0a0f24 55%, #05070f 100%);
+  pointer-events: none;
+}
+
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 941px;
+  height: 1672px;
+  transform: translate(-50%, -50%) scale(var(--stage-scale));
+  transform-origin: center center;
+}
+
+.stage-canvas {
+  position: absolute;
+  inset: 0;
+  width: 941px;
+  height: 1672px;
+  display: block;
+}
+
+/* Live copy layer, in the same design coordinates as the canvas. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.overlay-block {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 0 96px;
+  text-align: center;
+  transition: opacity 420ms ease-out;
+}
+
+.overlay-block[data-hidden='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Typography                                                          */
+/* ------------------------------------------------------------------ */
+
+.headline {
+  margin: 0;
+  font-size: 96px;
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: 0.005em;
+  color: var(--cream);
+  text-shadow:
+    0 0 30px rgba(255, 214, 140, 0.42),
+    0 0 78px rgba(255, 180, 78, 0.24),
+    0 4px 14px rgba(0, 0, 0, 0.62);
+  text-wrap: balance;
+}
+
+.headline-sm {
+  font-size: 72px;
+}
+
+/* The finale headline is one line in the approved arrival screen; wrapping it
+   pushes the body copy down over the station sign. */
+.headline-finale {
+  font-size: 84px;
+}
+
+.overlay-block-wide {
+  padding: 0 56px;
+}
+
+.subline {
+  margin: 26px 0 0;
+  font-size: 36px;
+  line-height: 1.34;
+  color: rgba(243, 226, 195, 0.92);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.72);
+  text-wrap: balance;
+}
+
+.flourish {
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+  height: auto;
+  color: var(--gold-line);
+}
+
+.flourish-top {
+  margin-bottom: 22px;
+}
+
+.flourish-bottom {
+  margin-top: 22px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Controls                                                            */
+/* ------------------------------------------------------------------ */
+
+/* The reference uses an integrated gold-edged pill, not a stock button. */
+.pill {
+  position: relative;
+  font: inherit;
+  font-size: 30px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  padding: 26px 56px;
+  border-radius: 999px;
+  border: 2px solid var(--gold-line);
+  background:
+    radial-gradient(130% 180% at 50% 130%, rgba(255, 200, 110, 0.22), rgba(13, 23, 56, 0) 62%),
+    linear-gradient(180deg, rgba(20, 34, 74, 0.78), rgba(9, 16, 40, 0.86));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 232, 178, 0.3),
+    0 0 34px rgba(255, 196, 96, 0.2),
+    0 12px 34px rgba(0, 0, 0, 0.48);
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    transform 150ms ease-out,
+    box-shadow 240ms ease-out,
+    color 240ms ease-out;
+}
+
+.pill:hover:not(:disabled) {
+  color: #fff3d4;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 240, 200, 0.4),
+    0 0 50px rgba(255, 202, 104, 0.34),
+    0 14px 38px rgba(0, 0, 0, 0.52);
+}
+
+.pill:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.pill:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.pill:focus-visible,
+.key-hit:focus-visible,
+.replay:focus-visible {
+  outline: 3px solid var(--gold-bright);
+  outline-offset: 6px;
+}
+
+/* Breathing glow and a slow float, never a bounce. */
+.pill-cta {
+  animation:
+    cta-breathe 3.4s ease-in-out infinite,
+    cta-float 4.6s ease-in-out infinite;
+}
+
+@keyframes cta-breathe {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 232, 178, 0.28),
+      0 0 26px rgba(255, 196, 96, 0.16),
+      0 12px 34px rgba(0, 0, 0, 0.48);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 240, 200, 0.42),
+      0 0 52px rgba(255, 206, 112, 0.38),
+      0 12px 34px rgba(0, 0, 0, 0.48);
+  }
+}
+
+@keyframes cta-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Invisible hit area over the canvas-drawn key. */
+.key-hit {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key-hit:disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ------------------------------------------------------------------ */
+/* Scene-specific copy                                                 */
+/* ------------------------------------------------------------------ */
+
+.destination-chip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  transition: opacity 500ms ease-out;
+}
+
+.destination-chip span {
+  font-size: 28px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  padding: 14px 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(226, 186, 110, 0.6);
+  background: rgba(9, 16, 40, 0.6);
+  box-shadow: 0 0 26px rgba(255, 196, 96, 0.16);
+}
+
+.caption-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 0 90px;
+  display: flex;
+  justify-content: center;
+  transition: opacity 500ms ease-out;
+}
+
+.caption-card p {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.4;
+  color: var(--cream);
+  padding: 28px 44px;
+  border-radius: 30px;
+  border: 1px solid var(--gold-line);
+  background: rgba(9, 16, 40, 0.68);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.42);
+  text-wrap: balance;
+}
+
+.finale-date {
+  margin: 30px 0 0;
+  font-size: 27px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(233, 205, 152, 0.85);
+  /* It lands over the station signage, so it carries its own contrast. */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 0 22px rgba(0, 0, 0, 0.6);
+}
+
+.replay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  width: max-content;
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Loading and failure                                                 */
+/* ------------------------------------------------------------------ */
+
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  /* Warm dark, so the fade into dawn is continuous rather than a cut. */
+  background: radial-gradient(circle at 50% 46%, #221b2c 0%, #120e1e 58%, #08060f 100%);
+  color: rgba(233, 214, 180, 0.72);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  transition: opacity 700ms ease-out;
+}
+
+.veil[data-fading='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.veil-glow {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 206, 128, 0.85) 0%, rgba(255, 176, 78, 0) 70%);
+  animation: veil-pulse 2s ease-in-out infinite;
+}
+
+.veil-track {
+  width: 132px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(233, 214, 180, 0.16);
+  overflow: hidden;
+}
+
+.veil-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 206, 128, 0.5), rgba(255, 226, 168, 0.95));
+  transition: width 260ms ease-out;
+}
+
+@keyframes veil-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.veil-error p {
+  margin: 0;
+  font-size: 17px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Portrait hint                                                       */
+/* ------------------------------------------------------------------ */
+
+.portrait-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 40;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(233, 214, 180, 0.7);
+  background: rgba(9, 16, 40, 0.72);
+  border: 1px solid rgba(226, 186, 110, 0.4);
+  border-radius: 999px;
+  padding: 8px 16px;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-cta {
+    animation: none;
+  }
+  .veil-glow {
+    animation: none;
+    opacity: 0.8;
+  }
+  .overlay-block,
+  .destination-chip,
+  .caption-card,
+  .veil {
+    transition-duration: 200ms;
+  }
+}

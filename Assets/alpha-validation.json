@@ -1,0 +1,26 @@
+{
+  "validatedOn": "2026-09-02",
+  "result": "pass",
+  "requirements": {
+    "decodedWithoutErrors": true,
+    "spritesHaveAlphaChannel": true,
+    "overlaysHaveAlphaChannel": true,
+    "transparentPixelRgbIsZero": true,
+    "greenScreenBackgroundIncluded": false,
+    "checkerboardBackgroundIncluded": false
+  },
+  "files": {
+    "sprites/contact_shadows_2x3_portrait.png": {"alphaMin": 0, "alphaMax": 0.584314, "hiddenRgbMax": 0},
+    "sprites/duck_reveal_cheer_2x4_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/key_fx_3x4_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/male_idle_2x3_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/panda_reveal_cheer_2x4_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/red_cover_reveal_2x4_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/silver_liftback_2x3_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/woman_driver_2x3_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "sprites/woman_walk_2x4_portrait.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0},
+    "overlays/cinematic_vignette_portrait.png": {"alphaMin": 0.003922, "alphaMax": 0.662745, "hiddenRgbMax": 0},
+    "overlays/side_window_driver_clip.png": {"alphaMin": 0, "alphaMax": 1, "hiddenRgbMax": 0}
+  },
+  "note": "Opaque environment plates are intentionally stored only in the separate backgrounds folder and are not sprite sheets."
+}
