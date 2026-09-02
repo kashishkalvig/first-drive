@@ -4,6 +4,8 @@ import { drawSpriteFrame } from '../rendering/drawSpriteFrame';
 import { layoutRect, sheet, type World } from './sceneTypes';
 import type { Rect } from '../config/manifest';
 
+const KEY_RING_Y_OFFSET = 110;
+
 /**
  * The golden key, floating over the revealed car.
  *
@@ -55,7 +57,9 @@ export function drawKey(ctx: CanvasRenderingContext2D, world: World): void {
   if (state.keyRingAlpha > 0) {
     ctx.save();
     ctx.globalAlpha = state.keyRingAlpha;
-    drawSpriteFrame(ctx, keyImage, keySheet, 11, keyDestination(world, baseHeight * 1.9 * state.keyRingScale));
+    const ringDestination = keyDestination(world, baseHeight * 1.9 * state.keyRingScale);
+    ringDestination[1] += state.keyFloat + KEY_RING_Y_OFFSET;
+    drawSpriteFrame(ctx, keyImage, keySheet, 11, ringDestination);
     ctx.restore();
   }
 

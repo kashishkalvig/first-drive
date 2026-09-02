@@ -104,15 +104,11 @@ export function FirstDriveExperience() {
    */
   const handleBegin = useCallback(() => {
     const director = directorRef.current;
-    if (!director?.transition('REVEAL')) return;
-
-    // The cloth animation and the celebration play through on their own; the
-    // key arrives after the viewer has had a beat to look at the car.
-    const revealDuration = timingFor(reduced).revealTotal;
-
-    window.setTimeout(() => {
+    director?.transition('REVEAL', () => {
+      // The key arrives after the reveal timeline has fully settled, so an
+      // eager click cannot race the transition lock.
       directorRef.current?.transition('KEY');
-    }, revealDuration * 1000);
+    });
   }, [reduced]);
 
   const handleKey = useCallback(() => {
@@ -129,9 +125,13 @@ export function FirstDriveExperience() {
       window.setTimeout(() => {
         const running = directorRef.current;
         if (!running) return;
-        if (!running.transition('ARRIVAL')) return;
-        const arrival = timingFor(reduced).arrivalTotal;
-        window.setTimeout(() => directorRef.current?.transition('COMPLETE'), arrival * 1000);
+        if (!running.transition('PARKED')) return;
+        window.setTimeout(() => {
+          const parked = directorRef.current;
+          if (!parked || !parked.transition('ARRIVAL')) return;
+          const arrival = timingFor(reduced).arrivalTotal;
+          window.setTimeout(() => directorRef.current?.transition('COMPLETE'), arrival * 1000);
+        }, 4000);
       }, driveHold * 1000);
     });
   }, [reduced]);

@@ -13,6 +13,7 @@ import { drawOpening } from '../scenes/OpeningScene';
 import { drawReveal } from '../scenes/RevealScene';
 import { drawKey, keyBurstParticles, revealSparkleParticles } from '../scenes/KeyScene';
 import { drawDriving } from '../scenes/DrivingScene';
+import { drawParked } from '../scenes/ParkedScene';
 import { drawArrival, drawFlash, drawVignette } from '../scenes/ArrivalScene';
 
 /**
@@ -174,13 +175,16 @@ export class SceneDirector {
         anim.driver.setFrame(0);
         parallax.update(delta);
         break;
+      case 'PARKED':
+        parallax.setSpeed(0);
+        break;
       case 'ARRIVAL':
       case 'COMPLETE':
         anim.walk.update(delta);
         anim.panda.update(delta);
         anim.duck.update(delta);
         parallax.update(delta);
-        this.emitStationAmbience(delta);
+        this.emitTopStationAmbience(delta);
         break;
       default:
         break;
@@ -195,17 +199,9 @@ export class SceneDirector {
     particles.update(delta);
   }
 
-  /** Time since the last finale particle, in ms. */
   private ambienceTimer = 0;
 
-  /**
-   * A slow drift of hearts, stars and petals across the finale.
-   *
-   * Topped up a few at a time rather than fired as one burst, so the last
-   * screen keeps moving gently for as long as it is on display without ever
-   * building into a confetti storm — the pool caps it regardless.
-   */
-  private emitStationAmbience(delta: number): void {
+  private emitTopStationAmbience(delta: number): void {
     const { state, particles, reduced } = this.world;
     if (reduced || state.arrivalAlpha < 0.6) return;
 
@@ -213,44 +209,20 @@ export class SceneDirector {
     if (this.ambienceTimer < 120) return;
     this.ambienceTimer = 0;
 
-    // Frames 6-10 of the key sheet: sparkles, stars, hearts and petals.
-    const FRAMES = [9, 7, 10, 6, 9, 7];
-    const frame = FRAMES[Math.floor(Math.random() * FRAMES.length)];
-
-    const spawnFromTop = Math.random() < 0.5;
-    if (spawnFromTop) {
-      const x = 120 + Math.random() * 700;
-      particles.spawn({
-        frame,
-        x,
-        y: 70 + Math.random() * 140,
-        size: 150 + Math.random() * 120,
-        vx: (Math.random() - 0.5) * 26,
-        vy: 42 + Math.random() * 38,
-        gravity: 18 + Math.random() * 14,
-        lifetime: 3.2 + Math.random() * 1.4,
-        spin: (Math.random() - 0.5) * 1.1,
-        fadeIn: 0.12,
-      });
-    }
-
-    const fromLeft = Math.random() < 0.5;
-    const x = fromLeft ? 120 + Math.random() * 300 : 520 + Math.random() * 300;
-    const burstCount = 2 + Math.floor(Math.random() * 3);
-    for (let i = 0; i < burstCount; i++) {
-      particles.spawn({
-        frame,
-        x: x + (Math.random() - 0.5) * 70,
-        y: 1550 + Math.random() * 110,
-        size: 130 + Math.random() * 120,
-        vx: (Math.random() - 0.5) * 60,
-        vy: -90 - Math.random() * 70,
-        gravity: 18 + Math.random() * 14,
-        lifetime: 2.6 + Math.random() * 1.4,
-        spin: (Math.random() - 0.5) * 0.9,
-        fadeIn: 0.18,
-      });
-    }
+    const frames = [9, 7, 10, 6, 9, 7];
+    const frame = frames[Math.floor(Math.random() * frames.length)];
+    particles.spawn({
+      frame,
+      x: 120 + Math.random() * 700,
+      y: 70 + Math.random() * 140,
+      size: 150 + Math.random() * 120,
+      vx: (Math.random() - 0.5) * 26,
+      vy: 42 + Math.random() * 38,
+      gravity: 18 + Math.random() * 14,
+      lifetime: 3.2 + Math.random() * 1.4,
+      spin: (Math.random() - 0.5) * 1.1,
+      fadeIn: 0.12,
+    });
   }
 
   private render(): void {
@@ -274,6 +246,10 @@ export class SceneDirector {
         break;
       case 'DRIVING':
         drawDriving(ctx, world);
+        break;
+      case 'PARKED':
+        drawDriving(ctx, world);
+        drawParked(ctx, world);
         break;
       case 'ARRIVAL':
       case 'COMPLETE':
@@ -326,6 +302,9 @@ export class SceneDirector {
         break;
       case 'DRIVING':
         this.buildDriving(timeline);
+        break;
+      case 'PARKED':
+        this.buildParked(timeline);
         break;
       case 'ARRIVAL':
         this.buildArrival(timeline);
@@ -546,6 +525,7 @@ export class SceneDirector {
     state.keyAlpha = 0;
     state.keyBurstAlpha = 0;
     state.keyRingAlpha = 0;
+    state.parkedAlpha = 0;
     anim.driver.setFrame(0);
     parallax.setSpeed(reduced ? 0 : ROAD_SPEED);
 
@@ -555,6 +535,17 @@ export class SceneDirector {
       .to(state, { drivingAlpha: 1, duration: fade, ease: EASE.fade }, 0)
       .to(state, { whiteFlash: 0, duration: fade, ease: EASE.fade }, 0)
       .to(state, { destinationAlpha: 1, duration: 0.5, ease: EASE.fade }, fade * 0.6);
+  }
+
+  private buildParked(timeline: gsap.core.Timeline): void {
+    const { state, parallax } = this.world;
+    const duration = this.world.reduced ? 0.25 : 0.6;
+
+    parallax.setSpeed(0);
+    state.wheelSpinning = false;
+    timeline
+      .to(state, { drivingAlpha: 0, duration, ease: EASE.fade }, 0)
+      .to(state, { parkedAlpha: 1, duration, ease: EASE.fade }, 0);
   }
 
   /** Eases the drive to a halt; resolves once the car has stopped. */

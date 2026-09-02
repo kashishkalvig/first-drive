@@ -19,6 +19,7 @@ export const ASSET_PATHS = {
     drivingFar: 'backgrounds/driving_far_portrait.png',
     drivingMid: 'backgrounds/driving_midground_portrait.png',
     drivingRoad: 'backgrounds/driving_foreground_road_portrait.png',
+    parked: 'backgrounds/parked-car-screen.jpeg',
     station: 'backgrounds/craigieburn_station_portrait.png',
   },
   sprites: {
@@ -64,6 +65,7 @@ export const DEFERRED_IMAGE_PATHS: readonly string[] = [
   ASSET_PATHS.backgrounds.drivingFar,
   ASSET_PATHS.backgrounds.drivingMid,
   ASSET_PATHS.backgrounds.drivingRoad,
+  ASSET_PATHS.backgrounds.parked,
   ASSET_PATHS.backgrounds.station,
   ASSET_PATHS.sprites.womanDriver,
   ASSET_PATHS.sprites.womanWalk,

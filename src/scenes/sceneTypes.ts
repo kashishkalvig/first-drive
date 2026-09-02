@@ -9,6 +9,7 @@ export type SceneName =
   | 'REVEAL'
   | 'KEY'
   | 'DRIVING'
+  | 'PARKED'
   | 'ARRIVAL'
   | 'COMPLETE';
 
@@ -45,6 +46,7 @@ export type SceneState = {
   keyRingScale: number;
 
   drivingAlpha: number;
+  parkedAlpha: number;
   carBob: number;
   wheelSpinning: boolean;
   destinationAlpha: number;
@@ -86,6 +88,7 @@ export function createSceneState(): SceneState {
     keyRingScale: 0.5,
 
     drivingAlpha: 0,
+    parkedAlpha: 0,
     carBob: 0,
     wheelSpinning: false,
     destinationAlpha: 0,

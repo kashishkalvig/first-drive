@@ -21,27 +21,6 @@ export function drawArrival(ctx: CanvasRenderingContext2D, world: World): void {
   const background = images.get(ASSET_PATHS.backgrounds.station);
   if (background) ctx.drawImage(background, 0, 0, DESIGN.width, DESIGN.height);
 
-  const carRect = layoutRect(world, 'stationFinale', 'carRect', LAYOUT.stationFinale.car);
-  const placedCar: [number, number, number, number] = [
-    carRect[0] + state.stationCarX,
-    carRect[1],
-    carRect[2],
-    carRect[3],
-  ];
-
-  const shadowImage = images.get(ASSET_PATHS.sprites.contactShadows);
-  if (shadowImage) {
-    drawSpriteFrame(ctx, shadowImage, sheet(world, 'contactShadows'), 2, placedCar);
-  }
-
-  const carImage = images.get(ASSET_PATHS.sprites.silverCar);
-  if (carImage) {
-    // Frame 2 is the three-quarter rear view the arrival reference uses.
-    drawSpriteFrame(ctx, carImage, sheet(world, 'silverLiftback'), 2, placedCar);
-  }
-
-  drawFinaleMascots(ctx, world);
-
   const walkImage = images.get(ASSET_PATHS.sprites.womanWalk);
   if (walkImage && state.womanAlpha > 0) {
     const walkSheet = sheet(world, 'womanWalk');
@@ -59,6 +38,8 @@ export function drawArrival(ctx: CanvasRenderingContext2D, world: World): void {
     ]);
     ctx.restore();
   }
+
+  drawFinaleMascots(ctx, world);
 
   ctx.restore();
 }

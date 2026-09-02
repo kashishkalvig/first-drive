@@ -256,7 +256,7 @@
     },
     "stationFinale": {
       "carRect": [-80, 920, 650, 650],
-      "womanRect": [555, 965, 300, 360]
+      "womanRect": [-187, -20, 1275, 1590]
     }
   },
   "sceneLayerOrder": {

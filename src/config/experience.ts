@@ -90,8 +90,8 @@ export const LAYOUT = {
     driverFrame: [152, 177, 198, 198] as Rect,
   },
   stationFinale: {
-    car: [20, 930, 620, 620] as Rect,
-    woman: [420, 860, 560, 680] as Rect,
+    car: [-2000, -2000, 0, 0] as Rect,
+    woman: [-187, -20, 1275, 1590] as Rect,
     /**
      * The approved arrival screen has the panda and duck large in the
      * foreground corners, waving her off. The manifest's `stationFinale` layer
