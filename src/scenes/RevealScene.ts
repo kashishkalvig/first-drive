@@ -1,7 +1,7 @@
 import { ASSET_PATHS } from '../config/assets';
 import { DESIGN, LAYOUT } from '../config/experience';
 import { drawSpriteFrame, fitToCell } from '../rendering/drawSpriteFrame';
-import { drawMale, drawRevealShadow } from './OpeningScene';
+import { drawRevealShadow } from './OpeningScene';
 import { layoutRect, sheet, type World } from './sceneTypes';
 
 /**

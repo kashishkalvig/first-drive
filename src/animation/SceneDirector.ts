@@ -292,8 +292,13 @@ export class SceneDirector {
    * Returns false when the move is illegal or another transition is already
    * running, so callers can treat a rejected tap as a no-op rather than having
    * to track interaction locks themselves.
+   *
+   * `onSettled` fires when this scene's own timeline finishes. Chain the next
+   * scene through it rather than through a timer of the same length: a timer
+   * racing the timeline it is timing loses often enough to matter, and a
+   * refused transition is not retried — the experience simply stops.
    */
-  transition(next: SceneName): boolean {
+  transition(next: SceneName, onSettled?: () => void): boolean {
     if (!this.canTransitionTo(next)) return false;
 
     this.transitioning = true;
@@ -301,7 +306,10 @@ export class SceneDirector {
 
     const timeline = gsap.timeline({
       onComplete: () => {
+        // Clear the lock *before* handing over, so a caller chaining the next
+        // scene here is not refused by the lock this timeline just released.
         this.transitioning = false;
+        onSettled?.();
       },
     });
     this.timeline = timeline;
@@ -324,6 +332,7 @@ export class SceneDirector {
         break;
       case 'COMPLETE':
         this.transitioning = false;
+        onSettled?.();
         break;
       default:
         break;

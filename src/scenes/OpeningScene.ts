@@ -42,6 +42,11 @@ export function drawCoveredShape(ctx: CanvasRenderingContext2D, world: World): v
   ctx.restore();
 }
 
+/**
+ * Currently unused: he was removed from both the opening and the reveal, and
+ * `createSceneState` starts `maleAlpha` at 0. Kept because putting him back is
+ * one call plus that one value, and the sheet still ships.
+ */
 export function drawMale(ctx: CanvasRenderingContext2D, world: World): void {
   const { state, images, anim } = world;
   const maleImage = images.get(ASSET_PATHS.sprites.maleIdle);

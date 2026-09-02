@@ -103,9 +103,11 @@ async function run(browser, viewport) {
   await page.click('[data-testid=key-hit]', { force: true }).catch(() => {});
   await page.waitForFunction(() => document.querySelector('.experience')?.dataset.scene === 'DRIVING', null, { timeout: 15000 });
   ok(true, 'the key starts the drive');
+  // The destination chip and caption card were removed from the driving scene;
+  // its headline is the only copy left there.
   ok(
-    (await page.textContent('.destination-chip')).trim() === 'Craigieburn Station',
-    'the destination reads Craigieburn Station',
+    (await page.textContent('.overlay-block:not(.overlay-block-wide) .headline-sm')).trim().length > 0,
+    'the driving scene shows its headline',
   );
 
   // The world must actually be moving.
