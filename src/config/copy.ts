@@ -28,7 +28,7 @@ export const COPY = {
   loading: 'Getting things ready…',
 
   opening: {
-    title: 'Hello Madam',
+    title: 'Hello\nDr. Madam <3',
     subtitle: '',
     cta: 'Tap to see what was special today',
     ctaAria: 'Tap to see what was special today',

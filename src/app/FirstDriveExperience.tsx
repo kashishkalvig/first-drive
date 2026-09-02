@@ -167,7 +167,7 @@ export function FirstDriveExperience() {
           aria-hidden={!showOpeningCopy}
         >
           <Flourish className="flourish-top" />
-          <h1 className="headline">{COPY.opening.title}</h1>
+          <h1 className="headline headline-opening">{COPY.opening.title}</h1>
           <Flourish className="flourish-bottom" />
           <p className="subline">{COPY.opening.subtitle}</p>
         </div>

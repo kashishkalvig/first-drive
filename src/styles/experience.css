@@ -121,6 +121,10 @@ body {
   text-wrap: balance;
 }
 
+.headline-opening {
+  white-space: pre-line;
+}
+
 .headline-sm {
   font-size: 72px;
 }
