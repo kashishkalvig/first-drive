@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CRITICAL_IMAGE_PATHS, DEFERRED_IMAGE_PATHS } from '../config/assets';
 import { COPY } from '../config/copy';
 import { LAYOUT } from '../config/experience';
-import { timingFor } from '../animation/timings';
 import { forgetManifest, loadManifest, type AssetManifest } from '../config/manifest';
 import { useAssetPreloader } from '../hooks/useAssetPreloader';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -23,7 +22,7 @@ const UI = {
   drivingChip: 430,
   drivingCaption: 1218,
   finaleText: 128,
-  finaleReplay: 1452,
+  finaleReplay: 1322,
 } as const;
 
 export function FirstDriveExperience() {
@@ -125,13 +124,11 @@ export function FirstDriveExperience() {
       window.setTimeout(() => {
         const running = directorRef.current;
         if (!running) return;
-        if (!running.transition('PARKED')) return;
-        window.setTimeout(() => {
-          const parked = directorRef.current;
-          if (!parked || !parked.transition('ARRIVAL')) return;
-          const arrival = timingFor(reduced).arrivalTotal;
-          window.setTimeout(() => directorRef.current?.transition('COMPLETE'), arrival * 1000);
-        }, 4000);
+        running.transition('ARRIVAL', () => {
+          directorRef.current?.transition('PARKED', () => {
+            directorRef.current?.transition('COMPLETE');
+          });
+        });
       }, driveHold * 1000);
     });
   }, [reduced]);
@@ -155,7 +152,7 @@ export function FirstDriveExperience() {
   const showOpeningCopy = scene === 'OPENING';
   const showKeyCopy = scene === 'KEY';
   const showDriving = scene === 'DRIVING';
-  const showFinale = scene === 'ARRIVAL' || scene === 'COMPLETE';
+  const showFinale = scene === 'ARRIVAL';
 
   return (
     /* `data-scene` is the scene machine's state, surfaced on the DOM so the
@@ -204,7 +201,7 @@ export function FirstDriveExperience() {
           <Flourish className="flourish-top" />
           <h1 className="headline headline-sm">{COPY.key.title}</h1>
           <Flourish className="flourish-bottom" />
-          <p className="subline">{COPY.key.hint}</p>
+          {COPY.key.hint ? <p className="subline">{COPY.key.hint}</p> : null}
         </div>
 
         <button

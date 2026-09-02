@@ -12,9 +12,9 @@ export const ALLOWED_TRANSITIONS: Readonly<Record<SceneName, readonly SceneName[
   OPENING: ['REVEAL'],
   REVEAL: ['KEY'],
   KEY: ['DRIVING'],
-  DRIVING: ['PARKED'],
-  PARKED: ['ARRIVAL'],
-  ARRIVAL: ['COMPLETE'],
+  DRIVING: ['ARRIVAL'],
+  PARKED: ['COMPLETE'],
+  ARRIVAL: ['PARKED'],
   COMPLETE: ['OPENING'],
 };
 
@@ -28,7 +28,7 @@ export const SCENE_ORDER: readonly SceneName[] = [
   'REVEAL',
   'KEY',
   'DRIVING',
-  'PARKED',
   'ARRIVAL',
+  'PARKED',
   'COMPLETE',
 ];

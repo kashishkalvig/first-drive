@@ -119,12 +119,9 @@ async function run(browser, viewport) {
   // 5. Arrival.
   await page.waitForFunction(() => document.querySelector('.experience')?.dataset.scene === 'ARRIVAL', null, { timeout: 30000 });
   await page.waitForFunction(() => document.querySelector('.experience')?.dataset.scene === 'COMPLETE', null, { timeout: 30000 });
-  const finale = (await page.textContent('.headline-finale')).trim();
-  ok(finale === 'Made it, Madam.', `the finale headline reads "${finale}"`);
-  // `.subline` appears in three scenes, so scope this to the finale block.
   ok(
-    (await page.textContent('.overlay-block-wide .subline')).includes('Craigieburn Station'),
-    'the finale names Craigieburn Station',
+    (await page.getAttribute('.overlay-block-wide', 'data-hidden')) === 'true',
+    'the parked card replaces the arrival copy',
   );
 
   const body = (await page.textContent('body')).toLowerCase();

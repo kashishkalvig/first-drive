@@ -252,14 +252,18 @@ export class SceneDirector {
         drawParked(ctx, world);
         break;
       case 'ARRIVAL':
-      case 'COMPLETE':
         drawArrival(ctx, world);
+        break;
+      case 'COMPLETE':
+        drawParked(ctx, world);
         break;
     }
 
-    if (image) world.particles.draw(ctx, image);
-    drawVignette(ctx, world);
-    drawFlash(ctx, world);
+    if (this.scene !== 'COMPLETE') {
+      if (image) world.particles.draw(ctx, image);
+      drawVignette(ctx, world);
+      drawFlash(ctx, world);
+    }
   }
 
   /**

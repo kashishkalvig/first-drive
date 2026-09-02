@@ -30,15 +30,15 @@ export const COPY = {
   opening: {
     title: 'Hello Madam',
     subtitle: '',
-    cta: 'Tap to see what’s special today',
-    ctaAria: 'Tap to see what is special today',
+    cta: 'Tap to see what was special today',
+    ctaAria: 'Tap to see what was special today',
   },
 
   key: {
-    title: 'Your first Drive begins today',
-    hint: 'A new first deserves its own key.',
-    cta: 'Tap the key to begin',
-    ctaAria: 'Tap the key to begin the drive',
+    title: 'Your First day to work by driving yourself',
+    hint: '',
+    cta: 'Tap the Key',
+    ctaAria: 'Tap the Key',
   },
 
   driving: {
@@ -48,8 +48,8 @@ export const COPY = {
   },
 
   finale: {
-    title: 'Made it, Madam.',
-    body: 'Your first drive to Craigieburn Station — a little milestone, now officially yours.',
+    title: 'On Your Own.',
+    body: "A little milestone before the Major Achivement. Be little proud of yourselve. It's juts the beginning.",
     date: formatMilestoneDate(milestoneDate),
     replay: 'Replay the memory',
   },
